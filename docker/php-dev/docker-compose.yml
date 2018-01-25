@@ -1,0 +1,23 @@
+version: '3.0'
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "800:80"
+    volumes:
+      - ./code:/code
+      - ./logs/nginx:/var/log/nginx
+      - ./site.conf /etc/nginx/conf.d/site.conf
+    links:
+      - fpm
+  fpm:
+    build: ./fpm
+    # restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./code:/var/www/html:rw
+      - ./fpm/php-dev.ini:/usr/local/etc/php/php.ini:ro
+      - ./fpm/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ./logs/php-fpm:/var/log/php-fpm:rw
