@@ -24,3 +24,9 @@ sudo service docker start
 #   Available Packages
 # Step2 : 安装指定版本的Docker-CE: (VERSION 例如上面的 17.03.0.ce.1-1.el7.centos)
 # sudo yum -y install docker-ce-[VERSION]
+sudo tee /etc/sysctl.conf <<-"eof"
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-arptables = 1
+eof
+
